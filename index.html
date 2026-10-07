@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>할 일 관리</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div id="save-warning" class="banner" role="alert" hidden>저장되지 않습니다 · 이 브라우저에 저장할 수 없어서 새로고침하면 변경 내용이 사라져요</div>
+
+  <main class="app">
+    <!-- 1. 헤더 -->
+    <header class="header">
+      <h1>할 일</h1>
+      <p id="today" class="today"></p>
+      <p id="progress-text" class="progress-text"></p>
+      <div id="progress-bar" class="progress" role="progressbar"
+           aria-label="전체 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="progress-fill"></div>
+      </div>
+      <p id="all-done" class="all-done" hidden>모두 완료했어요</p>
+      <ul class="category-progress">
+        <li class="category-work" data-progress="work">
+          <span class="category-name">업무</span>
+          <div class="progress" role="progressbar" aria-label="업무 진행률" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill"></div></div>
+          <span class="category-progress-text"></span>
+        </li>
+        <li class="category-personal" data-progress="personal">
+          <span class="category-name">개인</span>
+          <div class="progress" role="progressbar" aria-label="개인 진행률" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill"></div></div>
+          <span class="category-progress-text"></span>
+        </li>
+        <li class="category-study" data-progress="study">
+          <span class="category-name">공부</span>
+          <div class="progress" role="progressbar" aria-label="공부 진행률" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill"></div></div>
+          <span class="category-progress-text"></span>
+        </li>
+      </ul>
+    </header>
+
+    <!-- 2. 입력 -->
+    <form id="todo-form" class="todo-form">
+      <label for="todo-input" class="visually-hidden">할 일 내용</label>
+      <input id="todo-input" type="text" maxlength="100" placeholder="할 일을 입력하세요" autocomplete="off">
+      <label for="todo-category" class="visually-hidden">카테고리</label>
+      <select id="todo-category">
+        <option value="work">업무</option>
+        <option value="personal">개인</option>
+        <option value="study">공부</option>
+      </select>
+      <button type="submit">추가</button>
+    </form>
+
+    <!-- 3. 필터 -->
+    <nav id="filters" class="filters" aria-label="카테고리 필터">
+      <button type="button" data-filter="all">전체 <span data-count="all"></span></button>
+      <button type="button" data-filter="work">업무 <span data-count="work"></span></button>
+      <button type="button" data-filter="personal">개인 <span data-count="personal"></span></button>
+      <button type="button" data-filter="study">공부 <span data-count="study"></span></button>
+    </nav>
+
+    <!-- 4. 목록 -->
+    <ul id="todo-list" class="todo-list"></ul>
+    <button id="clear-completed" class="clear-completed" type="button" hidden></button>
+  </main>
+
+  <div id="toast" class="toast" role="status" hidden>
+    <span>삭제했어요</span>
+    <span aria-hidden="true">·</span>
+    <button id="undo-button" type="button">실행 취소</button>
+  </div>
+</body>
+</html>
