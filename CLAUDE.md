@@ -15,6 +15,15 @@ There is no build, no package manager and no test runner, by design. Run the app
 
 For automated browser checks, use Playwright MCP. It blocks `file://`, so serve the folder temporarily with `python -m http.server 8765 --bind 127.0.0.1` and stop the server afterwards. The only console error in that setup is a harmless `favicon.ico` 404. Tests often stub `window.confirm`, because "완료 항목 지우기" opens a dialog.
 
+## Deployment
+
+The site is live at https://jihunyangai.github.io/vanilla-todo/. The repo is the **public** `jihunyangAI/vanilla-todo`. GitHub Pages on the free plan only works with public repos, and the user chose public. A separate, unrelated repo, `jihunyangAI/todo-app` (React + TypeScript), also exists. Never push this project there.
+
+- **Every push to `main` deploys.** `.github/workflows/pages.yml` copies only `index.html`, `style.css` and `app.js` into `_site/` and publishes them with `actions/deploy-pages`. Pages runs in `build_type=workflow` mode.
+- **New runtime files** (images, extra scripts) must be added to the `cp` line in the workflow. Otherwise the site returns 404 for them. Docs (`*.md`) are deliberately left out of the site.
+- **Checking a deploy:** run `gh run list --repo jihunyangAI/vanilla-todo`, or `gh run watch <id> --exit-status`. Then confirm with `curl` that the app files return 200 and `PRD.md` returns 404.
+- **Storage is separate.** The deployed site and a locally opened `file://` copy keep their localStorage separately, so their to-do lists are independent.
+
 ## Hard constraints
 
 - Plain HTML, CSS and JavaScript only. Keep exactly three source files: `index.html`, `style.css`, `app.js`.
