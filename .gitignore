@@ -1,2 +1,5 @@
 # 브라우저 자동 테스트(Playwright MCP) 로그
 .playwright-mcp/
+
+# oh-my-claudecode 작업 상태
+.omc/
